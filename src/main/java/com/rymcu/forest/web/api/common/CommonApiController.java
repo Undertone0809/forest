@@ -63,7 +63,8 @@ public class CommonApiController {
                 throw new ServiceException(GlobalResultMessage.SEND_FAIL.getMessage());
             }
         } else {
-            throw new UnknownAccountException("该邮箱未注册！");
+            throw new ServiceException(GlobalResultMessage.ACCOUNT_NOT_EXIST.getMessage());
+//            throw new UnknownAccountException("该邮箱未注册！");
         }
         return GlobalResultGenerator.genSuccessResult(GlobalResultMessage.SEND_SUCCESS.getMessage());
     }

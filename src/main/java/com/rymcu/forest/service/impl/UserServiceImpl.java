@@ -128,6 +128,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
                 loginRecordService.saveLoginRecord(tokenUser.getIdUser());
                 return tokenUser;
             } else {
+
                 throw new AuthenticationException("密码错误");
             }
         } else {

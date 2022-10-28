@@ -9,6 +9,8 @@ import com.rymcu.forest.core.result.ResultCode;
 import com.rymcu.forest.enumerate.TransactionCode;
 import com.rymcu.forest.web.api.exception.BaseApiException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
@@ -52,6 +54,14 @@ public class BaseExceptionHandler {
                 result.setCode(1000002);
                 result.setMessage("用户无权限");
                 logger.info("用户无权限");
+            }else if (ex instanceof UnknownAccountException) {
+                result.setCode(502);
+                result.setMessage("帐号不存在");
+                logger.info("帐号不存在");
+            } else if (ex instanceof AuthenticationException) {
+                result.setCode(501);
+                result.setMessage("密码错误");
+                logger.info("密码错误");
             } else if (ex instanceof ServiceException) {
                 //业务失败的异常，如“账号或密码错误”
                 result.setCode(((ServiceException) ex).getCode());
