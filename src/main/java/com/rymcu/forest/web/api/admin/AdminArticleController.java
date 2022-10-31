@@ -31,4 +31,12 @@ public class AdminArticleController {
         String articlePerfect = article.getArticlePerfect();
         return GlobalResultGenerator.genSuccessResult(articleService.updatePerfect(idArticle, articlePerfect));
     }
+
+    @PatchMapping("/update-status")
+    public GlobalResult<Boolean> updateArticleStatus(@RequestBody Article article) {
+        Long idArticle = article.getIdArticle();
+        String articleStatus = article.getArticleStatus();
+        return GlobalResultGenerator.genSuccessResult(articleService.updateArticleStatus(idArticle, articleStatus));
+    }
+
 }

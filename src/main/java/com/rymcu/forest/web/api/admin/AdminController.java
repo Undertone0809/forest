@@ -210,6 +210,14 @@ public class AdminController {
         return GlobalResultGenerator.genSuccessResult(pageInfo);
     }
 
+    @GetMapping("/all-articles")
+    public GlobalResult<PageInfo<ArticleDTO>> allArticles(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer rows, ArticleSearchDTO articleSearchDTO) {
+        PageHelper.startPage(page, rows);
+        List<ArticleDTO> list = articleService.findAllArticles(articleSearchDTO);
+        PageInfo<ArticleDTO> pageInfo = new PageInfo<>(list);
+        return GlobalResultGenerator.genSuccessResult(pageInfo);
+    }
+
     @GetMapping("/comments")
     public GlobalResult<PageInfo<CommentDTO>> comments(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer rows) {
         PageHelper.startPage(page, rows);

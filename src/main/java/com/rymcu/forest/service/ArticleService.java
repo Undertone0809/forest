@@ -23,6 +23,13 @@ public interface ArticleService extends Service<Article> {
     List<ArticleDTO> findArticles(ArticleSearchDTO searchDTO);
 
     /**
+     * 根据检索内容/标签查询全部文章列表
+     * @param searchDTO
+     * @return
+     * */
+    List<ArticleDTO> findAllArticles(ArticleSearchDTO searchDTO);
+
+    /**
      * 查询文章详情信息
      * @param id
      * @param type
@@ -123,6 +130,14 @@ public interface ArticleService extends Service<Article> {
      * @return
      */
     Boolean updatePerfect(Long idArticle, String articlePerfect);
+
+    /**
+     * 更新文章状态 1为下架，2为上架
+     * @param idArticle
+     * @param articleStatus
+     * @return
+     */
+    Boolean updateArticleStatus(Long idArticle, String articleStatus);
 
     /**
      * 获取公告列表

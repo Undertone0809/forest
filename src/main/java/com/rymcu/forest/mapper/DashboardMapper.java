@@ -4,8 +4,10 @@ import com.rymcu.forest.dto.ArticleDTO;
 import com.rymcu.forest.dto.BankAccountDTO;
 import com.rymcu.forest.dto.UserInfoDTO;
 import com.rymcu.forest.dto.admin.DashboardData;
+import com.rymcu.forest.dto.admin.TagDTO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ronger
@@ -16,6 +18,8 @@ public interface DashboardMapper {
      * @return
      * */
     Integer selectUserCount();
+
+    List<TagDTO> selectTop10Tags();
 
     /**
      * 获取新注册用户数

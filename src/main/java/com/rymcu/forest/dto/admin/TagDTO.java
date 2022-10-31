@@ -23,4 +23,6 @@ public class TagDTO {
 
     private Author tagAuthor;
 
+    private Integer tagArticleCount;
+
 }

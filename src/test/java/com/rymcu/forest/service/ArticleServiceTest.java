@@ -126,6 +126,27 @@ class ArticleServiceTest {
     }
 
     /**
+     * 测试条件查询
+     * <p>
+     * 无参数时返回所有Article
+     */
+    @Test
+    void findAllArticles() {
+        // 无参数时返回参数不应为EmptyList
+        List<ArticleDTO> articlesAll = articleService.findAllArticles(new ArticleSearchDTO());
+        assertNotNull(articlesAll);
+        assertNotEquals(Collections.emptyList(), articlesAll);
+
+        // 测试条件查询是否含有目标数据
+        ArticleSearchDTO articleSearchDTO = new ArticleSearchDTO();
+        articleSearchDTO.setSearchText(testArticle.getArticleContent());
+        Map<Long, ArticleDTO> idArticleMap = articleService.findAllArticles(articleSearchDTO)
+                .stream()
+                .collect(Collectors.toMap(ArticleDTO::getIdArticle, item -> item));
+        assertNotNull(idArticleMap.get(testArticle.getIdArticle()));
+    }
+
+    /**
      * 测试通过Id获取Article
      */
     @Test
@@ -202,6 +223,20 @@ class ArticleServiceTest {
      */
     @Test
     void updatePerfect() {
+        articleService.updatePerfect(testArticle.getIdArticle(), "1");
+        ArticleDTO articleDTOByIdAfter1 = articleService.findArticleDTOById(testArticle.getIdArticle(), 0);
+        assertEquals("1", articleDTOByIdAfter1.getArticlePerfect());
+
+        articleService.updatePerfect(testArticle.getIdArticle(), "0");
+        ArticleDTO articleDTOByIdAfter2 = articleService.findArticleDTOById(testArticle.getIdArticle(), 0);
+        assertEquals("0", articleDTOByIdAfter2.getArticlePerfect());
+    }
+
+    /**
+     * 测试更新文章为下架、上架
+     */
+    @Test
+    void updateArticleStatus() {
         articleService.updatePerfect(testArticle.getIdArticle(), "1");
         ArticleDTO articleDTOByIdAfter1 = articleService.findArticleDTOById(testArticle.getIdArticle(), 0);
         assertEquals("1", articleDTOByIdAfter1.getArticlePerfect());

@@ -6,6 +6,7 @@ import com.rymcu.forest.dto.BankAccountDTO;
 import com.rymcu.forest.dto.UserInfoDTO;
 import com.rymcu.forest.dto.admin.Dashboard;
 import com.rymcu.forest.dto.admin.DashboardData;
+import com.rymcu.forest.dto.admin.TagDTO;
 import com.rymcu.forest.mapper.ArticleMapper;
 import com.rymcu.forest.mapper.DashboardMapper;
 import com.rymcu.forest.service.DashboardService;
@@ -39,6 +40,26 @@ public class DashboardServiceImpl implements DashboardService {
         dashboard.setCountViewNum(dashboardMapper.selectCountViewNum());
         dashboard.setTodayViewNum(dashboardMapper.selectTodayViewNum());
         return dashboard;
+    }
+
+    @Override
+    public List<TagDTO> selectTop10Tags() {
+        return dashboardMapper.selectTop10Tags();
+    }
+
+    @Override
+    public Map top10TagsData() {
+        Map map = new HashMap(10);
+        List<TagDTO> arr =  dashboardMapper.selectTop10Tags();
+        List<String> tags = null;
+        List<Integer> numbers = null;
+        for (TagDTO tagDTO : arr) {
+            tags.add(tagDTO.getTagTitle());
+            numbers.add(tagDTO.getTagArticleCount());
+        }
+        map.put("tags",tags);
+        map.put("numbers",numbers);
+        return map;
     }
 
     @Override

@@ -24,6 +24,16 @@ public interface ArticleMapper extends Mapper<Article> {
      */
     List<ArticleDTO> selectArticles(@Param("searchText") String searchText, @Param("tag") String tag, @Param("topicUri") String topicUri);
 
+
+    /**
+     * 获取全部文章列表
+     * @param searchText
+     * @param tag
+     * @param topicUri
+     * @return
+     */
+    List<ArticleDTO> selectAllArticles(@Param("searchText") String searchText, @Param("tag") String tag, @Param("topicUri") String topicUri);
+
     /**
      * 根据文章 ID 查询文章
      * @param id
@@ -184,6 +194,14 @@ public interface ArticleMapper extends Mapper<Article> {
      * @return
      */
     int updatePerfect(@Param("idArticle") Long idArticle, @Param("articlePerfect") String articlePerfect);
+
+    /**
+     *
+     * @param idArticle
+     * @param articlePerfect
+     * @return
+     */
+    int updateArticleStatus(@Param("idArticle") Long idArticle, @Param("articleStatus") String articlePerfect);
 
     /**
      * 删除文章关联文章内容表信息

@@ -77,6 +77,16 @@ public class ArticleServiceImpl extends AbstractService<Article> implements Arti
     }
 
     @Override
+    public List<ArticleDTO> findAllArticles(ArticleSearchDTO searchDTO) {
+        List<ArticleDTO> list;
+        list = articleMapper.selectAllArticles(searchDTO.getSearchText(), searchDTO.getTag(), searchDTO.getTopicUri());
+        list.forEach(articleDTO -> genArticle(articleDTO, 0));
+        return list;
+    }
+
+
+
+    @Override
     public ArticleDTO findArticleDTOById(Long id, Integer type) {
         ArticleDTO articleDTO = articleMapper.selectArticleDTOById(id, type);
         if (articleDTO == null) {
@@ -132,7 +142,9 @@ public class ArticleServiceImpl extends AbstractService<Article> implements Arti
             newArticle.setArticleTags(articleTags);
             newArticle.setCreatedTime(new Date());
             newArticle.setUpdatedTime(newArticle.getCreatedTime());
-            newArticle.setArticleStatus(article.getArticleStatus());
+            // temporary modify
+            //newArticle.setArticleStatus(article.getArticleStatus());
+            newArticle.setArticleStatus("1");
             articleMapper.insertSelective(newArticle);
             articleMapper.insertArticleContent(newArticle.getIdArticle(), articleContent, articleContentHtml);
         } else {
@@ -261,6 +273,14 @@ public class ArticleServiceImpl extends AbstractService<Article> implements Arti
     public Boolean updatePerfect(Long idArticle, String articlePerfect) {
         if (articleMapper.updatePerfect(idArticle, articlePerfect) == 0) {
             throw new ContentNotExistException("设置优选文章失败!");
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean updateArticleStatus(Long idArticle, String articleStatus) {
+        if (articleMapper.updateArticleStatus(idArticle, articleStatus) == 0) {
+            throw new ContentNotExistException("设置更改文章状态失败");
         }
         return true;
     }

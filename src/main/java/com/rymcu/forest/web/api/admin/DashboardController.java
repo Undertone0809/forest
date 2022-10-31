@@ -8,6 +8,7 @@ import com.rymcu.forest.dto.ArticleDTO;
 import com.rymcu.forest.dto.BankAccountDTO;
 import com.rymcu.forest.dto.UserInfoDTO;
 import com.rymcu.forest.dto.admin.Dashboard;
+import com.rymcu.forest.dto.admin.TagDTO;
 import com.rymcu.forest.service.DashboardService;
 import com.rymcu.forest.util.Utils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,16 @@ public class DashboardController {
     @GetMapping("/last-thirty-days")
     public GlobalResult LastThirtyDaysData() {
         Map map = dashboardService.lastThirtyDaysData();
+        return GlobalResultGenerator.genSuccessResult(map);
+    }
+
+    @GetMapping("/top10-tags")
+    public GlobalResult top10Tags() {
+//        List<TagDTO> map= dashboardService.selectTop10Tags();
+        Map map = dashboardService.top10TagsData();
+//        for (TagDTO tagDTO : map) {
+//            System.out.println(tagDTO);
+//        }
         return GlobalResultGenerator.genSuccessResult(map);
     }
 

@@ -5,6 +5,7 @@
         <result column="label" property="label"></result>
         <result column="value" property="value"></result>
     </resultMap>
+
     <resultMap id="UserInfoResultMapper" type="com.rymcu.forest.dto.UserInfoDTO">
         <result column="id" property="idUser"/>
         <result column="account" property="account"/>
@@ -67,6 +68,12 @@
         select count(*)
         from forest_visit
         where created_time > str_to_date(date_format(sysdate(), '%Y-%m-%d'), '%Y-%m-%d')
+    </select>
+    <select id="selectTop10Tags" resultType="com.rymcu.forest.dto.admin.TagDTO">
+        select *
+        from forest_tag
+        order by tag_article_count desc
+        limit 10;
     </select>
     <select id="selectLastThirtyDaysArticleData" resultMap="DashboardDataResultMap">
         select COUNT(*) as value, date_format(created_time, '%Y-%m-%d') as label
